@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استغفر الله</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #3b0066, #4e1779, #65139c);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+            transition: background 1s ease;
+            overflow: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .phrase {
+            font-size: 4rem;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .phrase:hover {
+            transform: scale(1.1);
+        }
+
+        .date-time, .hijri-date, .next-prayer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1.5rem;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        .date-time { left: 20px; }
+        .hijri-date { right: 20px; }
+        .next-prayer { bottom: 60px; }
+
+        .random-ayah {
+            position: absolute;
+            top: 20px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: drift 10s linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: translateY(100vh); }
+            to { transform: translateY(-10vh); }
+        }
+
+        /* Navigation Bar Styles */
+        .nav-bar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .nav-bar .menu-icon {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .nav-bar .dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-bar .dropdown a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        .nav-bar .dropdown a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .nav-bar.active .dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="nav-bar" id="navBar">
+        <div class="menu-icon">☰</div>
+        <div class="dropdown">
+            <a href="adhkar/morning-adhkar/">أذكار الصباح</a>
+            <a href="adhkar/evening-adhkar/">أذكار المساء</a>
+            <a href="sebha/">السبحة الإلكترونية</a>
+        </div>
+    </div>
+
+    <div class="phrase">استغفر الله</div>
+    <div class="date-time" id="dateTime"></div>
+    <div class="hijri-date" id="hijriDate">التاريخ الهجري: ...</div>
+    <div class="next-prayer" id="nextPrayer">وقت الصلاة القادم: ...</div>
+    <div class="random-ayah" id="randomAyah"></div>
+    <div class="particles" id="particles"></div>
+    <audio id="audioPlayer" loop>
+        <source src="your-audio-path.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('dateTime').innerText = now.toLocaleDateString('ar-EG', options);
+        }
+        setInterval(updateDateTime, 1000);
+
+        const ayat = [
+            'فَاذْكُرُونِي أَذْكُرْكُمْ',
+            'وَاسْتَغْفِرُوا اللَّهَ إِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ',
+            'إِنَّ مَعَ الْعُسْرِ يُسْرًا',
+            'وَذَكِّرْ فَإِنَّ الذِّكْرَى تَنفَعُ الْمُؤْمِنِينَ',
+            'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ'
+        ];
+
+        function displayRandomAyah() {
+            const randomIndex = Math.floor(Math.random() * ayat.length);
+            document.getElementById('randomAyah').innerText = ayat[randomIndex];
+        }
+        displayRandomAyah();
+        setInterval(displayRandomAyah, 10000);
+
+        async function fetchPrayerTimes() {
+            const response = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Fayoum&country=EG&method=5');
+            const data = await response.json();
+            const timings = data.data.timings;
+            const now = new Date();
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            let nextPrayer = 'Fajr';
+            for (let prayer of prayers) {
+                const prayerTime = new Date(now.toDateString() + ' ' + timings[prayer]);
+                if (prayerTime > now) {
+                    nextPrayer = prayer;
+                    break;
+                }
+            }
+            document.getElementById('nextPrayer').innerText = `وقت الصلاة القادم: ${nextPrayer} - ${timings[nextPrayer]}`;
+        }
+        fetchPrayerTimes();
+
+        async function fetchHijriDate() {
+            try {
+                const today = new Date();
+                const dateStr = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+                const response = await fetch(`https://api.aladhan.com/v1/gToH?date=${dateStr}`);
+                const data = await response.json();
+
+                const hijriDate = data.data.hijri.date;
+                const weekday = data.data.hijri.weekday.ar;
+
+                document.getElementById('hijriDate').innerText = `التاريخ الهجري: ${weekday} - ${hijriDate}`;
+            } catch (error) {
+                document.getElementById('hijriDate').innerText = 'تعذر تحميل التاريخ الهجري';
+                console.error('Error fetching Hijri date:', error);
+            }
+        }
+        fetchHijriDate();
+
+        function playAudio() { document.getElementById('audioPlayer').play(); }
+        setTimeout(playAudio, 2000);
+
+        // Toggle dropdown menu
+        const navBar = document.getElementById('navBar');
+        navBar.addEventListener('click', () => {
+            navBar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
