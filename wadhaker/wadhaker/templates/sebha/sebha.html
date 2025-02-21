@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عداد تسبيح</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #3b0066, #4e1779, #65139c);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .tasbeeh-counter {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            text-shadow: 0 4px  10px rgba(0, 0, 0, 0.5);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+        }
+
+        button {
+            font-size: 1.5rem;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .increment {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .reset {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Navigation Bar Styles */
+        .nav-bar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .nav-bar .menu-icon {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .nav-bar .dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-bar .dropdown a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        .nav-bar .dropdown a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .nav-bar.active .dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="nav-bar" id="navBar">
+        <div class="menu-icon">☰</div>
+        <div class="dropdown">
+            <a href="http://localhost:8000/">الصفحة الرئيسية</a>
+            <a href="http://localhost:8000/adhkar/morning-adhkar/">أذكار الصباح</a>
+            <a href="http://localhost:8000/adhkar/evening-adhkar/">أذكار المساء</a>
+        </div>
+    </div>
+
+    <div class="tasbeeh-counter" id="counter">0</div>
+    <div class="buttons">
+        <button class="increment" onclick="increaseCounter()">زيادة</button>
+        <button class="reset" onclick="resetCounter()">إعادة</button>
+    </div>
+
+    <script>
+        let count = 0;
+
+        function increaseCounter() {
+            count++;
+            document.getElementById('counter').innerText = count;
+        }
+
+        function resetCounter() {
+            count = 0;
+            document.getElementById('counter').innerText = count;
+        }
+
+        // Toggle dropdown menu
+        const navBar = document.getElementById('navBar');
+        navBar.addEventListener('click', () => {
+            navBar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

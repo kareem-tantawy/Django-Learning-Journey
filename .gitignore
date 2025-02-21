@@ -1,0 +1,5 @@
+.venv
+wadhaker/Lib
+wadhaker/scripts
+wadhaker/Include
+wadhaker/pyvenv.cfg
