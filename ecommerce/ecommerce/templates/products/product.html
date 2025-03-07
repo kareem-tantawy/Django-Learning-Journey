@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 16 Pro Max -  Engima Store</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Black background */
+            color: #fff; /* White text */
+            text-align: center;
+        }
+
+        a {
+            color: #00ff00; /* Green links */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #111; /* Dark gray header */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ff00; /* Green border */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #00ff00; /* Green text */
+        }
+        /* Product Section */
+        .product {
+            padding: 20px;
+        }
+        
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Custom Image Size */
+        .product-image {
+            width: 30px; /* Set the width */
+            height: 30px; /* Maintain aspect ratio */
+        }
+
+        .product h2 {
+            font-size: 28px;
+            color: #00ff00; /* Green text */
+            margin: 20px 0;
+        }
+
+        .product .price {
+            font-size: 24px;
+            color: #00ff00; /* Green price */
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product .description {
+            font-size: 18px;
+            color: #ccc; /* Light gray text */
+            margin: 20px auto;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .product .buy-now {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #00ff00; /* Green button */
+            color: #000; /* Black text */
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .product .buy-now:hover {
+            background-color: #00cc00; /* Darker green on hover */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #111; /* Dark gray footer */
+            padding: 10px 20px;
+            border-top: 2px solid #00ff00; /* Green border */
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #00ff00; /* Green text */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Engima Store</h1>
+        <nav>
+            <ul>
+                <li><a href={% url 'home' %}>Home</a></li>
+                <li><a href={% url 'products' %}>Products</a></li>
+                <li><a href={% url 'login' %}>Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Product Details -->
+    <div class="product">
+        <img src="{{Product_c.image.url}}" alt="iPhone 16 Pro Max" style="width: 250px; height: auto;">
+        <h2>iPhone 16 Pro Max</h2>
+        <p class="price">${{Product_c.price}}</p>
+        <p class="description">
+            {{Product_c.description}}
+        </p>
+        <button class="buy-now">Buy Now</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Engima Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

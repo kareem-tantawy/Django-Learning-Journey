@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engima Store</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Black background */
+            color: #fff; /* White text */
+        }
+
+        a {
+            color: #00ff00; /* Green links */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #111; /* Dark gray header */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ff00; /* Green border */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #00ff00; /* Green text */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #222; /* Dark gray hero section */
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #00ff00; /* Green border */
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            color: #00ff00; /* Green text */
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #ccc; /* Light gray text */
+        }
+
+        /* Main Content Styles */
+        .container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .main-content {
+            flex: 3;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: #222; /* Dark gray sidebar */
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .sidebar h3 {
+            color: #00ff00; /* Green text */
+            border-bottom: 2px solid #00ff00; /* Green underline */
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .card {
+            background-color: #222; /* Dark gray cards */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: #00ff00; /* Green text */
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #ccc; /* Light gray text */
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #00ff00; /* Green button */
+            color: #000; /* Black text */
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            background-color: #00cc00; /* Darker green on hover */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #111; /* Dark gray footer */
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #00ff00; /* Green border */
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #00ff00; /* Green text */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Engima Store</h1>
+        <nav>
+            <ul>
+                <li><a href={% url 'home' %}>Home</a></li>
+                <li><a href={% url 'products' %}>Products</a></li>
+                <li><a href={% url 'login' %}>Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Welcome to Engima Store</h2>
+        <p>Your one-stop shop for the latest smartphones and laptops.</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Featured Products Section -->
+            <section>
+                <h2>Featured Products</h2>
+                <div class="card">
+                    <h3>Iphone 16 Pro Max</h3>
+                    <p>Latest model with 512GB storage and 48MP camera.</p>
+                    <a href={% url 'product' %}>View Details</a>
+                </div>
+                <div class="card">
+                    <h3>Mac Book Air Pro</h3>
+                    <p>Powerful laptop with 16GB RAM and 512GB SSD.</p>
+                    <a href={% url 'product' %}>View Details</a>
+                </div>
+            </section>
+        {% comment %} </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Categories</h3>
+            <ul>
+                <li><a href="#">Smartphones</a></li>
+                <li><a href="#">Laptops</a></li>
+                <li><a href="#">Accessories</a></li>
+            </ul>
+        </aside>
+    </div> {% endcomment %}
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Engima Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>
