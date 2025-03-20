@@ -24,19 +24,23 @@ body {
     top: 0;
     z-index: 1000;
 }
+
 .navbar-brand {
     font-size: 1.5rem;
     font-weight: bold;
     color: #fff !important;
 }
+
 .nav-link {
     color: #ffffff !important;
     margin-right: 10px;
     transition: color 0.3s ease;
 }
+
 .nav-link:hover {
     color: #e0b3ff !important;
 }
+
 .btn-custom {
     background-color: #ffffff;
     color: #3b0066;
@@ -45,6 +49,7 @@ body {
     text-decoration: none;
     font-weight: 600;
 }
+
 .btn-custom:hover {
     background-color: #e0b3ff;
     color: #fff;
@@ -62,7 +67,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px; /* Added space between posts */
+    margin-bottom: 30px;
+    /* Added space between posts */
 }
 
 /* Sidebar */
@@ -72,16 +78,19 @@ body {
     border-radius: 12px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
+
 .sidebar h3 {
     font-weight: 700;
     color: #4e1779;
 }
+
 .list-group-item {
     border: none;
     padding: 12px;
     font-size: 15px;
     transition: background 0.3s ease;
 }
+
 .list-group-item:hover {
     background: #e0b3ff;
     color: white;
@@ -93,6 +102,116 @@ body {
     color: white;
     text-align: center;
     padding: 5px;
-    margin-top: auto; /* Pushes footer to bottom */
+    margin-top: auto;
+    /* Pushes footer to bottom */
     width: 100%;
+}
+
+
+/* Profile Page Specific Styles - Add these to your main.css file */
+
+/* Profile Container */
+.profile-container {
+    padding: 10px;
+}
+
+/* Profile Header */
+.profile-header {
+    padding-bottom: 15px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* This ensures the image fills the container without distortion */
+    border-radius: 50%; /* Creates a perfect circle */
+    border: 4px solid #e0b3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+.profile-image-sm {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e0b3ff;
+}
+
+.profile-username {
+    color: #3b0066;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.profile-bio {
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.profile-divider {
+    border-top: 2px solid #e0b3ff;
+    margin: 20px 0;
+}
+
+/* Detail Cards */
+.detail-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.detail-title {
+    color: #4e1779;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0b3ff;
+    margin-bottom: 15px;
+}
+
+/* Activity Cards */
+.post-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 10px;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Buttons */
+.btn-purple {
+    background-color: #4e1779;
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: #3b0066;
+    color: white;
+}
+
+.btn-outline-purple {
+    color: #4e1779;
+    border-color: #4e1779;
+}
+
+.btn-outline-purple:hover {
+    background-color: #4e1779;
+    color: white;
+}
+
+/* Custom Badge */
+.bg-purple {
+    background-color: #4e1779;
 }
