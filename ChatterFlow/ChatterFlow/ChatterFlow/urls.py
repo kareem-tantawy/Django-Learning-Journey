@@ -23,11 +23,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login-form'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout-form'),
     # path('logout/', auth_views.LogoutView.as_view(
     #     template_name='users/logout.html',
     #     next_page='login-form',  # Optional: redirect after logout
     #     http_method_names=['get', 'post']  # Allow GET method
     # ), name='logout-form'),
-    path('logout/', user_views.logout_view, name='logout-form'),
+    # path('logout/', user_views.logout_view, name='logout-form'),
     path('register/', user_views.register, name='register-form'),
+    path('profile/', user_views.profile, name='profile'),
 ]
