@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body text-center p-5">
+                    <h2 class="mb-4" style="color: #4e1779; font-weight: 700;">You have been logged out</h2>
+                    
+                    <p class="lead text-muted mb-4">Your session has ended successfully.</p>
+                    
+                    <div class="d-grid gap-2">
+                        <form method="POST" action="{% url 'login-form' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-lg" style="background: linear-gradient(135deg, #3b0066, #4e1779); color: white; border-radius: 8px; font-weight: 600;">
+                                Log In Again
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'blog-home' %}" style="color: #65139c; text-decoration: none; font-weight: 600;">
+                            Return to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

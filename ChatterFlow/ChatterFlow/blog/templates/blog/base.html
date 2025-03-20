@@ -29,9 +29,13 @@
 
         /* Navbar */
         .navbar {
+            margin-bottom: 20px;
             background: linear-gradient(135deg, #3b0066, #4e1779, #65139c);
-            padding: 12px 0;
+            padding: 12px 0px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .navbar-brand {
             font-size: 1.5rem;
@@ -45,6 +49,15 @@
         }
         .nav-link:hover {
             color: #e0b3ff !important;
+        }
+        .sidebar-link {
+            color:rgb(0, 0, 0);
+            margin-left: 2px;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        .sidebar-link:hover {
+            color:rgb(83, 16, 128) !important;
         }
         .btn-custom {
             background-color: #ffffff;
@@ -71,6 +84,82 @@
           padding: 20px;
           border-radius: 10px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          margin-bottom: 30px; /* Added space between posts */
+        }
+
+        /* Blog Post Styling - New */
+        .post-item {
+          background-color: white;
+          padding: 20px;
+          border-radius: 8px;
+          margin-bottom: 25px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          transition: transform 0.2s ease;
+        }
+        
+        .post-item:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+        
+        .post-title {
+          margin-bottom: 10px;
+          color: #4e1779;
+          font-weight: 600;
+        }
+        
+        .post-meta {
+          color: #6c757d;
+          margin-bottom: 15px;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 10px;
+        }
+        
+        .post-content {
+          color: #4a4a4a;
+          margin-bottom: 15px;
+          line-height: 1.5;
+        }
+        
+        .read-more-btn {
+          background: linear-gradient(135deg, #3b0066, #4e1779);
+          color: white;
+          border: none;
+          padding: 6px 15px;
+          border-radius: 6px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: opacity 0.2s ease;
+        }
+        
+        .read-more-btn:hover {
+          opacity: 0.9;
+        }
+        
+        /* Pagination */
+        .pagination {
+          display: flex;
+          justify-content: center;
+          margin: 30px 0;
+        }
+        
+        .pagination a {
+          padding: 5px 12px;
+          margin: 0 3px;
+          color: #4e1779;
+          background-color: white;
+          border-radius: 4px;
+          text-decoration: none;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .pagination a.current-page {
+          background-color: #4e1779;
+          color: white;
+        }
+        
+        .pagination a:hover:not(.current-page) {
+          background-color: #e0b3ff;
         }
 
         /* Sidebar */
@@ -103,7 +192,7 @@
           padding: 5px;
           margin-top: auto; /* Pushes footer to bottom */
           width: 100%;
-      }
+        }
     </style>
 </head>
 <body>
@@ -120,8 +209,18 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'blog-home' %}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'blog-about' %}">About</a></li>
                     </ul>
-                    <a href="#" class="btn btn-custom ms-3">Login</a>
-                    <a href="#" class="btn btn-custom ms-2">Register</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}" class="btn btn-custom ms-3">Profile</a>
+                        <form method="post" action="{% url 'logout-form' %}">
+                            {% csrf_token %}
+                            <button class="btn btn-custom ms-3" type="submit">Logout</button>
+                        </form>
+                    
+                        {% comment %} <a href="{% url 'logout-form' %}" class="btn btn-custom ms-3">Logout</a> {% endcomment %}
+                    {% else %}
+                        <a href="{% url 'login-form' %}" class="btn btn-custom ms-3">Login</a>
+                        <a href="{% url 'register-form' %}" class="btn btn-custom ms-2">Register</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -130,21 +229,27 @@
         <main class="container">
             <div class="row">
                 <div class="col-lg-8">
+                    {% if messages %}
+                        {% for message in messages%}
+                            <div class='alert alert-{{ message.tags }}' role='alert'>
+                                {{ message }}
+                            </div>
+                        {% endfor%}
+                    {% endif %}
                     <div class="content-section">
                         {% block content %}{% endblock %}
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar mt-4 mt-lg-0">
-                        <h3>Our Sidebar</h3>
-                        <p class="text-muted">You can put any information here you'd like.</p>
+                        <h3>ChatterFlow Sidebar</h3>
+                        {% comment %} <p class="text-muted">You can put any information here you'd like.</p> {% endcomment %}
                         <ul class="list-group">
-                            <li class="list-group-item">Latest Posts</li>
-                            <li class="list-group-item">Announcements</li>
-                            <li class="list-group-item">Calendars</li>
-                            <li class="list-group-item">Etc</li>
+                            <li class="list-group-item"><a class="sidebar-link" href="{% url 'blog-home' %}">Latest Posts</a></li>
+                            <li class="list-group-item"><a class="sidebar-link" href="#">Announcements</li>
+                            <li class="list-group-item"><a class="sidebar-link" href="#">Calendars</li>
                         </ul>
-                    </ul>
+                    </div>
                 </div>
             </div>
         </main>
