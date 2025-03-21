@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -17,18 +18,21 @@
                 <div class="px-4">
                     <h5 class="mb-3">Account Details</h5>
                     <div class='profile-username'>
-                        <p><strong>Username:</strong> {{ user.username }}</p>
-                        <p><strong>Email:</strong> {{ user.email }}</p>
-                        <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+                        <form method="POST" class="p-3" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ p_form|crispy }}
+                            {% csrf_token %}
+                            
+                            {{ u_form|crispy }}
+                                                        
+                            <div class="d-grid gap-2 mt-4">
+                                <button class="btn btn-lg" type="submit" style="background: linear-gradient(135deg, #3b0066, #4e1779); color: white; border-radius: 8px; font-weight: 600;">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <div class="d-grid gap-2 mt-4">
-                    <a href="{% url 'profile-update' %}" class="btn btn-lg" style="background: linear-gradient(135deg, #3b0066, #4e1779); color: white; border-radius: 8px; font-weight: 600; text-align: center;">
-                        Edit Profile
-                    </a>
-                </div>
-                
             </div>
         </div>
     </div>

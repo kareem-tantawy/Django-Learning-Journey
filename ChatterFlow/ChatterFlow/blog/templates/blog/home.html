@@ -2,32 +2,24 @@
 {% block content %}
   {% for post in posts %}
     <div class="post-item">
-      <!-- Post title -->
-      <h3 class="post-title">
-        {{ post.title }}
-      </h3>
-      
-      <!-- Author and date info -->
-      <div class="post-meta">
-        <small>
-          Posted by {{ post.author.username }}
-          on {{ post.date_posted|date:"F d, Y" }}
-        </small>
+      <!-- Post Image -->
+      <img class="post-img" src="{{ post.author.image.url }}" alt="{{ post.author.username }}">
+
+      <!-- Post Details -->
+      <div class="post-details">
+        <h3 class="post-title">{{ post.title }}</h3>
+        
+        <div class="post-meta">
+          <small>Posted by {{ post.author.username }} on {{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+
+        <div class="post-content">
+          <p>{{ post.content|truncatewords:30 }}</p>
+        </div>
+
+        <!-- Read More Button -->
+        <a href="{% url 'blog-about' %}" class="read-more-btn">Read more</a>
       </div>
-      
-      <!-- Post content -->
-      <div class="post-content">
-        <p>{{ post.content|truncatewords:30 }}</p>
-      </div>
-      
-      <!-- Read more button -->
-      <button class="read-more-btn" style="background: linear-gradient(135deg, #3b0066, #4e1779); color: white; border-radius: 8px; padding: 8px 15px; border: none;">
-        <a href="{% url 'blog-about' %}" class="read-more" style="color: white; text-decoration: none; font-weight: bold; display: block;">Read more</a>
-      </button>
-    
-      
     </div>
-
-
   {% endfor %}
 {% endblock content %}

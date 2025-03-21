@@ -193,6 +193,69 @@
           margin-top: auto; /* Pushes footer to bottom */
           width: 100%;
         }
+
+        .post-item {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Spacing between image and text */
+            background: #f9f9f9; /* Light background for better contrast */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    
+        .post-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4e1779; /* Border to match button gradient */
+        }
+    
+        .post-details {
+            flex: 1; /* Takes up remaining space */
+        }
+    
+        .post-title {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #3b0066;
+        }
+    
+        .post-meta {
+            font-size: 0.9rem;
+            color: gray;
+        }
+    
+        .post-content {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
+    
+        .read-more-btn {
+            background: linear-gradient(135deg, #3b0066, #4e1779);
+            color: white;
+            border-radius: 8px;
+            padding: 8px 15px;
+            border: none;
+            text-align: center;
+            font-weight: bold;
+            display: inline-block;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+    
+        .read-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        .read-more {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
     </style>
 </head>
 <body>
