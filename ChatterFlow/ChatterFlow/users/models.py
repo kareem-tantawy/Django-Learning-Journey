@@ -1,16 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from PIL import Image
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    gender = models.CharField(max_length=10, default='Man')
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    gender = models.CharField(max_length=10, default='man')
     image = models.ImageField(default='profile_pics/default_woman.jpg' if gender =='man' else 'profile_pics/default_man.jpg' , upload_to='profile_pics')
     bio = models.TextField(default='')
-    
-    def __str__(self):
-        return f'{self.user.username} Profile'
+   
+    def __str__(self) -> str:
+        return str(self.username)
     
     def save(self, *args, **kwargs):
         

@@ -32,7 +32,8 @@ urlpatterns = [
     #     http_method_names=['get', 'post']  # Allow GET method
     # ), name='logout-form'),
     # path('logout/', user_views.logout_view, name='logout-form'),
-    path('register/', user_views.register, name='register-form'),
+    # path('register/', user_views.register, name='register-form'),
+    path('register/', user_views.register.as_view(), name='register-form'),
     path('profile/', user_views.profile, name='profile'),
 ]
 
