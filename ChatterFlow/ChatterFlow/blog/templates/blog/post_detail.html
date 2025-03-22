@@ -1,0 +1,26 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="post-item">
+    <!-- Post Image -->
+      <div class="post-meta" style="display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+        <!-- Using onerror to handle image loading issues in different browsers -->
+        <img src="{{ post.author.image.url }}" alt="{{ post.author.username }}" class="author-img" onerror="this.onerror=null; this.src='/static/blog/default-avatar.png';" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #4e1779;">
+      </div>
+
+      <!-- Post Details -->
+      <div class="post-details">
+          <h3 class="post-title">{{ post.title }}</h3>
+          
+        <div class="post-meta">
+          <small>Posted by {{ post.author.username }} on {{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+
+        <div class="post-content">
+          <p>{{ post.content}}</p>
+        </div>
+
+        <!-- Read More Button -->
+        <a href="{% url 'blog-home' %}" class="read-more-btn">Back to blog</a>
+      </div>
+    </div>
+{% endblock content %}

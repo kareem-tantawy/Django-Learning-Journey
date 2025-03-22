@@ -14,11 +14,11 @@
         </div>
 
         <div class="post-content">
-          <p>{{ post.content|truncatewords:30 }}</p>
+          <p>{{ post.content|truncatewords:15 }}</p>
         </div>
 
         <!-- Read More Button -->
-        <a href="{% url 'blog-about' %}" class="read-more-btn">Read more</a>
+        <a href="{% url 'post-detail' post.id %}" class="read-more-btn">Read more</a>
       </div>
     </div>
   {% endfor %}

@@ -1,29 +1,21 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Post
 
-# Create your views here.
-# def home(request):
-#     return render(request, 'blog/home.html')
 
-class home(TemplateView):
-    context = {
-        'posts': Post.objects.all()
-    }
+class home(ListView):
+    model = Post
+    context_object_name = 'posts'
     template_name = 'blog/home.html'
+    ordering = ['-date_posted']
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['posts'] = Post.objects.all()
-        return context
-    
-# def about(request):
-#     return render(request, 'blog/about.html')
+class post(DetailView):
+    model = Post
+    # context_object_name = 'post-detail'
 
+# default template_name = <app>/<model>_<viewtype>.html
+
+    
 class about(TemplateView):
     template_name = 'blog/about.html'
     
-    
-# class HelloView(TemplateView):
-#     """A class-based view rendering a template named 'hello.html'."""
-#     template_name = 'hello.html'
