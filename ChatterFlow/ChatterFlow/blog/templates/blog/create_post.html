@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <h2 class="text-center mb-4" style="color: #4e1779; font-weight: 700;">Create Post</h2>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <form method="POST" class="p-3">
+                {% csrf_token %}
+                <div class="form-group mb-4">
+                    {{ form|crispy}}
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button class="btn btn-lg" type="submit" style="background: linear-gradient(135deg, #3b0066, #4e1779); color: white; border-radius: 8px; font-weight: 600;">
+                        Post
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

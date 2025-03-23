@@ -11,7 +11,7 @@
       <div class="post-details">
           <h3 class="post-title">{{ post.title }}</h3>
           
-        <div class="post-meta">
+        <div class="author-details">
           <small>Posted by {{ post.author.username }} on {{ post.date_posted|date:"F d, Y" }}</small>
         </div>
 
@@ -19,8 +19,21 @@
           <p>{{ post.content}}</p>
         </div>
 
-        <!-- Read More Button -->
-        <a href="{% url 'blog-home' %}" class="read-more-btn">Back to blog</a>
+        <!-- Action Buttons -->
+        <div class="post-actions">
+          <!-- Back To Blog Button -->
+          <a href="{% url 'blog-home' %}" class="read-more-btn">Back to blog</a>
+          
+          <!-- Show Update/Delete only if user is author -->
+          {% if user == post.author %}
+            <a href="{% url 'post-update' post.id %}" class="update-btn">
+              <i class="fas fa-edit"></i> Update
+            </a>
+            <a href="{% url 'post-delete' post.id %}" class="delete-btn">
+              <i class="fas fa-trash"></i> Delete
+            </a>
+          {% endif %}
+        </div>
       </div>
     </div>
 {% endblock content %}

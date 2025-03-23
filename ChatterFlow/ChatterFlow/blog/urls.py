@@ -4,8 +4,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('', views.home.as_view(), name='blog-home'),
+    path('', views.Home.as_view(), name='blog-home'),
     path('post/<int:pk>/', views.post.as_view(), name='post-detail'),
-    path('about/', views.about.as_view(), name='blog-about'),
+    path('post/new/', views.PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
+    path('about/', views.About.as_view(), name='blog-about'),
 ]
 
