@@ -15,6 +15,17 @@ urlpatterns = [
         name="logout-form",
     ),
     path("register/", views.register.as_view(), name="register-form"),
-    path("profile/<int:profile_id>/", views.profile, name="profile"),
-    path("profile/update/", views.update_profile, name="profile-update"),
+    path("profile/<int:profile_id>/", views.profile_detail, name="profile-detail"),
+    path("profile/<int:profile_id>/update/", views.update_profile, name="profile-update"),
+    path("toggle-follow/<int:profile_id>/", views.toggle_follow, name="toggle_follow"),
+    path(
+        "profile/<int:profile_id>/followers/",
+        views.followers_list,
+        name="followers-list",
+    ),
+    path(
+        "profile/<int:profile_id>/following/",
+        views.following_list,
+        name="following-list",
+    ),
 ]

@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+{% for follower in followers %}
+
+    <h3>
+        <a href="{% url 'profile-detail' follower.user.profile.id %}" style="text-decoration: none">{{ follower.user.username }}</a>
+    </h3>
+
+{% endfor %}
+
+{% endblock content %}

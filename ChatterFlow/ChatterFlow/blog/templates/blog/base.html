@@ -27,7 +27,7 @@
                     </ul>
                     <div class="d-flex flex-column flex-sm-row align-items-center gap-2">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'profile' user.profile.id %}" class="btn btn-custom">Profile</a>
+                            <a href="{% url 'profile-detail' user.profile.id %}" class="btn btn-custom">Profile</a>
                             <form method="post" action="{% url 'logout-form' %}">
                                 {% csrf_token %}
                                 <button class="btn btn-custom" type="submit">Logout</button>
