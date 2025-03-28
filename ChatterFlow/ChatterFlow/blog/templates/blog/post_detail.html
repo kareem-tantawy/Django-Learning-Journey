@@ -35,5 +35,21 @@
           {% endif %}
         </div>
       </div>
+
     </div>
+    <!-- Comment Section -->
+    <div class="comment-section">
+      <h4 class="mb-3" style="color: #4e1779;">Comments ({{ comments.count }})</h4>
+      
+      <!-- Comment Form -->
+      <form method="post" class="mb-4">
+          {% csrf_token %}
+          {{ form.content }}
+          <button type="submit" class="read-more-btn mt-2">Post Comment</button>
+      </form>
+
+      <!-- Recursive Comment Rendering -->
+      {% include 'blog/comment_thread.html' with comments=comments %}
+  </div>
+
 {% endblock content %}
