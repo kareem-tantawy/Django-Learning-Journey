@@ -11,14 +11,13 @@
 
     <div class="post-item">
       <!-- Post Image -->
-      <img class="post-img" src="{{ post.author.image.url }}" alt="{{ post.author.username }}">
-
+      <a href="{% url 'profile' post.author.profile.id %}"><img class="post-img" src="{{ post.author.profile.image.url }}" alt="{{ post.author.username }}"></a>
       <!-- Post Details -->
       <div class="post-details">
-        <h3 class="post-title">{{ post.title }}</h3>
+        <h3 class="post-title"><a href="{% url 'post-detail' post.id %}" class="post-title text-decoration:" style="text-decoration: none;">{{ post.title }}</a></h3>
         
         <div class="author-details">
-          <small>Posted by {{ post.author.username }} on {{ post.date_posted|date:"F d, Y" }}</small>
+          <small>Posted by <a href="{% url 'profile' post.author.profile.id %}" style="text-decoration: none;">{{ post.author.username }}</a> on {{ post.date_posted|date:"F d, Y" }}</small>
         </div>
 
         <div class="post-content">

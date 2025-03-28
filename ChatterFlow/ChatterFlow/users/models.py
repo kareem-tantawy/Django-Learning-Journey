@@ -1,10 +1,18 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from PIL import Image
 
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+
+    def __str__(self) -> str:
+        return str(self.username)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     gender = models.CharField(max_length=10, default="man")
     image = models.ImageField(
         default=(
@@ -14,24 +22,19 @@ class CustomUser(AbstractUser):
         ),
         upload_to="profile_pics",
     )
-    bio = models.TextField(default="")
+    bio = models.TextField(default="", null=True, blank=True)
 
-    def __str__(self) -> str:
-        return str(self.username)
+    def __str__(self):
+        return f"{self.user.username} profile"
+
+    def get_absolute_url(self):
+        return reverse("profile-detail", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
-        # Set default image if none provided
-        if not self.image:
-            default_image = (
-                "profile_pics/default_man.jpg"
-                if self.gender == "man"
-                else "profile_pics/default_woman.jpg"
-            )
-            self.image.name = default_image  # Assign default image path
+        # Save the instance first to ensure the image path is generated
+        super().save(*args, **kwargs)
 
-        super().save(*args, **kwargs)  # Save the instance first to generate image path
-
-        # Resize image only if it's not a default one (skip resizing default images)
+        # Resize the image only if it's not a default one
         if self.image and "default_" not in self.image.name:
             img = Image.open(self.image.path)
 
@@ -39,4 +42,4 @@ class CustomUser(AbstractUser):
             max_size = (300, 300)
             img.thumbnail(max_size)
 
-            img.save(self.image.path)  # Save optimized image
+            img.save(self.image.path)  # Save the optimized image

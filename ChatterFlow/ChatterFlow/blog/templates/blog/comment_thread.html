@@ -3,7 +3,7 @@
 <div class="comment-item {% if comment.parent %}nested-comment{% endif %}" 
      style="margin-left: {{ comment.level|default:0|multiply:30 }}px;">
     <div class="comment-header">
-        <img src="{{ comment.author.image.url }}" 
+        <img src="{{ comment.author.profile.image.url }}" 
              alt="{{ comment.author.username }}" 
              class="comment-avatar"
              onerror="this.onerror=null; this.src='/static/blog/default-avatar.png';"

@@ -101,6 +101,7 @@ body {
   margin-bottom: 10px;
   color: #4e1779;
   font-weight: 600;
+  text-decoration: none;
 }
 
 .post-meta {
