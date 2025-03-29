@@ -447,3 +447,233 @@ body {
 .comment-item:last-child:before {
   display: none;
 }
+
+/* Updated CSS with fixes for Edge */
+.profile-stats-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* The gap property isn't well supported in older Edge, so use margin instead */
+.stat-link {
+  margin: 0 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.profile-stat {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 15px;
+  background: white;
+  min-width: 90px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.profile-stat:hover {
+  -webkit-transform: translateY(-3px);
+  -ms-transform: translateY(-3px);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.stat-count {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4e1779;
+  display: block;
+}
+
+.stat-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+
+
+/* Followers List Styling */
+.followers-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  color: #4e1779;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+  text-align: center;
+}
+
+.followers-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 15px;
+}
+
+.follower-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  border: 1px solid #eee;
+}
+
+.follower-card:hover {
+  -webkit-transform: translateY(-3px);
+  -ms-transform: translateY(-3px);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.follower-image-link {
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.follower-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4e1779;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.follower-img:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(78, 23, 121, 0.3);
+}
+
+.follower-info {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.follower-username {
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  color: #4e1779;
+  text-decoration: none;
+  margin-bottom: 5px;
+  -webkit-transition: color 0.2s ease;
+  transition: color 0.2s ease;
+}
+
+.follower-username:hover {
+  color: #6e3799;
+  text-decoration: underline;
+}
+
+.follower-bio {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.follow-btn {
+  background-color: #4e1779;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  margin-left: 10px;
+}
+
+.follow-btn:hover {
+  background-color: #6e3799;
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.no-followers {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-style: italic;
+}
+
+.back-link {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.back-btn {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 14px;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: #e0e0e0;
+  color: #4e1779;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .followers-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .follower-card {
+    padding: 12px;
+  }
+  
+  .follower-img {
+    width: 50px;
+    height: 50px;
+  }
+}

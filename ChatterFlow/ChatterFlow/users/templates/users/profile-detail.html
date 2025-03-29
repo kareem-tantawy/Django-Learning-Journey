@@ -24,13 +24,22 @@
                     </button>
                     {% endif %}
                 </div>
-
-                <div>
-                    <a href="{% url "followers-list" profile.id %}">Followers</a>
-                </div>
-                <div>
-                    <a href="{% url "following-list" profile.id %}">Following</a>
-                </div>
+                
+                <div class="profile-stats-container">
+                    <a href="{% url "followers-list" profile.id %}" class="stat-link">
+                      <div class="profile-stat">
+                        <span id="followers-count" class="stat-count">{{ profile.get_followers_count }}</span>
+                        <span class="stat-label">Followers</span>
+                      </div>
+                    </a>
+                    
+                    <a href="{% url "following-list" profile.id %}" class="stat-link">
+                      <div class="profile-stat">
+                        <span id="following-count" class="stat-count">{{ profile.get_following_count }}</span>
+                        <span class="stat-label">Following</span>
+                      </div>
+                    </a>
+                  </div>
 
                 <hr>
 
@@ -55,75 +64,4 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const followButton = document.getElementById('follow-button');
-        
-        if (followButton) {
-            followButton.addEventListener('click', function() {
-                const profileId = this.dataset.profileId;
-                const csrfToken = '{{ csrf_token }}';
-                
-                fetch(`/toggle-follow/${profileId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': csrfToken,
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'same-origin'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Update button text and styling
-                    if (data.is_following) {
-                        this.textContent = 'Unfollow';
-                        this.classList.add('following');
-                    } else {
-                        this.textContent = 'Follow';
-                        this.classList.remove('following');
-                    }
-                    
-                    // Update followers count
-                    const followersCountElement = document.getElementById('followers-count');
-                    if (followersCountElement) {
-                        followersCountElement.textContent = data.followers_count;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-            });
-        }
-    });
-    
-    // Utility function to get CSRF token (fallback method)
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-</script>
-
-<!-- Optional: Add some additional CSS for the follow button -->
-<style>
-.read-more-btn.following {
-    background: linear-gradient(135deg, #4e1779, #3b0066);
-    opacity: 0.8;
-}
 {% endblock content %}

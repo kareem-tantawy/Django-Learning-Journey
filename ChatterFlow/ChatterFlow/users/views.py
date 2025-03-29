@@ -100,6 +100,7 @@ def toggle_follow(request, profile_id):
             {
                 "is_following": is_following,
                 "followers_count": target_profile.get_followers_count(),
+                "following_count": target_profile.get_following_count(),
             }
         )
 

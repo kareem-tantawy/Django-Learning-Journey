@@ -1,12 +1,46 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 
-{% for follower in followers %}
-
-    <h3>
-        <a href="{% url 'profile-detail' follower.user.profile.id %}" style="text-decoration: none">{{ follower.user.username }}</a>
-    </h3>
-
-{% endfor %}
+<div class="followers-container">
+  <h2 class="section-title">Followers</h2>
+  
+  {% if followers %}
+    <div class="followers-list">
+      {% for follower in followers %}
+        <div class="follower-card">
+          <a href="{% url 'profile-detail' follower.user.profile.id %}" class="follower-image-link">
+            <img 
+              src="{{ follower.user.profile.image.url }}" 
+              alt="{{ follower.user.username }}" 
+              class="follower-img" 
+              onerror="this.onerror=null; this.src='/static/blog/default-avatar.png';"
+            >
+          </a>
+          <div class="follower-info">
+            <a href="{% url 'profile-detail' follower.user.profile.id %}" class="follower-username">
+              {{ follower.user.username }}
+            </a>
+            {% if follower.user.profile.bio %}
+              <p class="follower-bio">{{ follower.user.profile.bio|truncatechars:60 }}</p>
+            {% endif %}
+          </div>
+          {% if user.is_authenticated and user != follower.user and follower not in user.profile.following_list %}
+            <button class="follow-btn">Follow</button>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="no-followers">
+      <p>No followers yet</p>
+    </div>
+  {% endif %}
+  
+  <div class="back-link">
+    <a href="javascript:history.back()" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+</div>
 
 {% endblock content %}
