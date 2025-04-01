@@ -19,25 +19,27 @@ class Home(ListView):
     context_object_name = "posts"
     template_name = "blog/home.html"
     ordering = ["-date_posted"]
-    paginate_by = 2
+    paginate_by = 5
 
 
 class PostDetailView(DetailView, FormView):
     model = Post
-    template_name = 'blog/post_detail.html'
+    template_name = "blog/post_detail.html"
     context_object_name = "post"
     form_class = CommentForm
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['comments'] = Comment.objects.filter(post=self.object, parent__isnull=True).order_by('-created_at')
-        context['form'] = self.get_form()
+        context["comments"] = Comment.objects.filter(
+            post=self.object, parent__isnull=True
+        ).order_by("-created_at")
+        context["form"] = self.get_form()
         return context
-    
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
-        
+
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user
@@ -46,11 +48,12 @@ class PostDetailView(DetailView, FormView):
             if parent_id:
                 parent_comment = get_object_or_404(Comment, id=parent_id)
                 comment.parent = parent_comment
-                
+
             comment.save()
             return redirect(self.object.get_absolute_url())
-        
+
         return self.form_invalid(form)
+
 
 ## FBV for post_detail
 # def post_detail(request, post_id):
