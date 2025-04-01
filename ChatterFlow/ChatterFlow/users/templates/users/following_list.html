@@ -6,45 +6,35 @@
   
   {% if following %}
     <div class="followers-list">
-      {% for follower in following %}
+      {% for followed_profile in following %}
         <div class="follower-card">
-          <a href="{% url 'profile-detail' follower.user.profile.id %}" class="follower-image-link">
+          <a href="{% url 'profile-detail' followed_profile.id %}" class="follower-image-link">
             <img 
-              src="{{ follower.user.profile.image.url }}" 
-              alt="{{ follower.user.username }}" 
+              src="{{ followed_profile.image.url }}" 
+              alt="{{ followed_profile.user.username }}" 
               class="follower-img" 
               onerror="this.onerror=null; this.src='/static/blog/default-avatar.png';"
             >
           </a>
           <div class="follower-info">
-            <a href="{% url 'profile-detail' follower.user.profile.id %}" class="follower-username">
-              {{ follower.user.username }}
+            <a href="{% url 'profile-detail' followed_profile.id %}" class="follower-username">
+              {{ followed_profile.user.username }}
             </a>
-            {% if follower.user.profile.bio %}
-              <p class="follower-bio">{{ follower.user.profile.bio|truncatechars:60 }}</p>
+            {% if followed_profile.bio %}
+              <p class="follower-bio">{{ followed_profile.bio|truncatechars:60 }}</p>
             {% endif %}
           </div>
-            {% comment %} {% if user.is_authenticated and user != follower.user %}
-              <button 
-                  class="follow-btn"
-                  data-profile-id="{{ follower.user.profile.id }}"
-                  data-is-following="{% if is_following %}true{% else %}false{% endif %}"
-              >
-                  {% if is_following %}Unfollow{% else %}Follow{% endif %}
-              </button>
-          {% endif %} {% endcomment %}
           <div class='profile-actions'>
-            {% comment %} {% if user.is_authenticated and user.username != profile.user.username and user != follower.user %}
-            <button 
-                id="follow-button" 
-                data-profile-id="{{ profile.id }}"
-                class="{% if is_following %}read-more-btn following{% else %}read-more-btn{% endif %}"
-                data-is-following="{{ is_following|lower }}"
-            >
-                {% if is_following %}Unfollow{% else %}Follow{% endif %}
-            </button>
-            {% endif %} {% endcomment %}
-        </div>
+            {% if user.is_authenticated and user.profile != followed_profile %}
+              <button 
+                  class="follow-btn" 
+                  id="follow-button-{{ followed_profile.id }}"
+                  data-profile-id="{{ followed_profile.id }}"
+              >
+                  {% if user.profile in followed_profile.followers.all %}Unfollow{% else %}Follow{% endif %}
+              </button>
+            {% endif %}
+          </div>
         </div>
       {% endfor %}
     </div>

@@ -18,7 +18,7 @@
                         id="follow-button" 
                         data-profile-id="{{ profile.id }}"
                         class="{% if is_following %}read-more-btn following{% else %}read-more-btn{% endif %}"
-                        data-is-following="{{ is_following|lower }}"
+                        {% comment %} data-is-following="{{ is_following|lower }}" {% endcomment %}
                     >
                         {% if is_following %}Unfollow{% else %}Follow{% endif %}
                     </button>

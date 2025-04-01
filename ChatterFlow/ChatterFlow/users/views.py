@@ -110,29 +110,27 @@ def toggle_follow(request, profile_id):
 
 def followers_list(request, profile_id):
     profile = get_object_or_404(Profile, id=profile_id)
-
     followers = profile.followers.all()
 
     context = {
         "profile": profile,
         "followers": followers,
         "followers_count": profile.get_followers_count(),
-        "is_own_profile": request.user.id == profile_id,
+        "is_own_profile": request.user.is_authenticated
+        and request.user.profile.id == profile.id,
     }
-
     return render(request, "users/followers_list.html", context)
 
 
 def following_list(request, profile_id):
     profile = get_object_or_404(Profile, id=profile_id)
-
     following = profile.following_set.all()
 
     context = {
         "profile": profile,
         "following": following,
         "following_count": profile.get_following_count(),
-        "is_own_profile": request.user.username == profile_id,
+        "is_own_profile": request.user.is_authenticated
+        and request.user.profile.id == profile.id,
     }
-
     return render(request, "users/following_list.html", context)

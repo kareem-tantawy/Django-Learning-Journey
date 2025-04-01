@@ -94,58 +94,102 @@
                 replyForm.style.display = "none";
             }
         }
-            
-    document.addEventListener('DOMContentLoaded', function() {
-        const followButton = document.getElementById('follow-button');
         
-        if (followButton) {
-            followButton.addEventListener('click', function() {
-                const profileId = this.dataset.profileId;
-                const csrfToken = '{{ csrf_token }}';
-                
-                fetch(`/toggle-follow/${profileId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': csrfToken,
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'same-origin'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Update button text and styling
-                    if (data.is_following) {
-                        this.textContent = 'Unfollow';
-                        this.classList.add('following');
-                    } else {
-                        this.textContent = 'Follow';
-                        this.classList.remove('following');
-                    }
+        document.addEventListener('DOMContentLoaded', function() {
+            // For the profile detail page (single button with ID)
+            const followButton = document.getElementById('follow-button');
+            
+            if (followButton) {
+                followButton.addEventListener('click', function() {
+                    const profileId = this.dataset.profileId;
+                    const csrfToken = getCookie('csrftoken');
                     
-                    // Update followers count
-                    const followersCountElement = document.getElementById('followers-count');
-                    if (followersCountElement) {
-                        followersCountElement.textContent = data.followers_count;
-                    }
+                    fetch(`/toggle-follow/${profileId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Update button text and styling
+                        if (data.is_following) {
+                            this.textContent = 'Unfollow';
+                            this.classList.add('following');
+                        } else {
+                            this.textContent = 'Follow';
+                            this.classList.remove('following');
+                        }
+                        
+                        // Update followers count
+                        const followersCountElement = document.getElementById('followers-count');
+                        if (followersCountElement) {
+                            followersCountElement.textContent = data.followers_count;
+                        }
+                        
+                        // Update following count
+                        const followingCountElement = document.getElementById('following-count');
+                        if (followingCountElement) {
+                            followingCountElement.textContent = data.following_count;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+            }
+            
+            // For the followers/following list pages (multiple buttons with class)
+            const listFollowButtons = document.querySelectorAll('.follow-btn');
+            
+            listFollowButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const profileId = this.dataset.profileId;
+                    const csrfToken = getCookie('csrftoken');
                     
-                    // Update following count
-                    const followingCountElement = document.getElementById('following-count');
-                    if (followingCountElement) {
-                        followingCountElement.textContent = data.following_count;
-                    }
+                    fetch(`/toggle-follow/${profileId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrfToken, 
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Update button text and styling
+                        if (data.is_following) {
+                            this.textContent = 'Unfollow';
+                            this.classList.add('following');
+                        } else {
+                            this.textContent = 'Follow';
+                            this.classList.remove('following');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                 });
             });
-        }
-    });
-    
+        });
+
     
     // Utility function to get CSRF token (fallback method)
+// Make sure this getCookie function is properly defined
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {

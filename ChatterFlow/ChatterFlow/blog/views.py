@@ -19,6 +19,7 @@ class Home(ListView):
     context_object_name = "posts"
     template_name = "blog/home.html"
     ordering = ["-date_posted"]
+    paginate_by = 2
 
 
 class PostDetailView(DetailView, FormView):
