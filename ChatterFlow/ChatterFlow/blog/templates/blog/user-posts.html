@@ -1,0 +1,48 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<h1 class='post-title mb-2'>Posted by {{view.kwargs.username}} ({{page_obj.paginator.count}})</h1>
+  {% for post in user_posts %}
+    <div class="post-item">
+      <!-- Post Image -->
+      <a href="{% url 'profile-detail' post.author.profile.id %}"><img class="post-img" src="{{ post.author.profile.image.url }}" alt="{{ post.author.username }}"></a>
+      <!-- Post Details -->
+      <div class="post-details">
+        <h3 class="post-title"><a href="{% url 'post-detail' post.id %}" class="post-title text-decoration:" style="text-decoration: none;">{{ post.title }}</a></h3>
+        
+        <div class="author-details">
+          <small>Posted by <a href="{% url 'profile-detail' post.author.profile.id %}" style="text-decoration: none;">{{ post.author.username }}</a> on {{ post.date_posted|date:"F d, Y" }}</small>
+        </div>
+
+        <div class="post-content">
+          <p>{{ post.content|truncatewords:15 }}</p>
+        </div>
+
+        <!-- Read More Button -->
+        <a href="{% url 'post-detail' post.id %}" class="read-more-btn">Read more</a>
+      </div>
+    </div>
+  {% endfor %}
+  
+  {% if is_paginated %}
+  <div class="pagination">
+    {% if page_obj.has_previous and page_obj.number >= 4 %}
+      <a href="?page=1" class="first">First</a>
+      <a href="?page={{page_obj.previous_page_number}}" class="prev">Previous</a>
+    {% endif %}
+    
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <a href="?page={{num}}" class="current-page">{{num}}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{num}}">{{num}}</a>
+      {% endif %}
+    {% endfor %}
+    
+    {% if page_obj.has_next and page_obj.paginator.num_pages > page_obj.number|add:'2' %}
+      <a href="?page={{page_obj.next_page_number}}" class="next">Next</a>
+      <a href="?page={{page_obj.paginator.num_pages}}" class="last">Last</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+{% endblock content %}

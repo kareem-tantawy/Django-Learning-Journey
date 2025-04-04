@@ -11,6 +11,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
+from users.models import CustomUser
 from .forms import CommentForm
 
 
@@ -20,6 +21,16 @@ class Home(ListView):
     template_name = "blog/home.html"
     ordering = ["-date_posted"]
     paginate_by = 5
+
+class UserPosts(ListView):
+    model = Post
+    context_object_name = "user_posts"
+    template_name = "blog/user-posts.html"
+    paginate_by = 5
+    
+    def get_queryset(self):
+        user = get_object_or_404(CustomUser, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by("-date_posted")
 
 
 class PostDetailView(DetailView, FormView):

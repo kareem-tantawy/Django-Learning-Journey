@@ -58,7 +58,11 @@
                         </a>
                     </div>
                 {% endif %}
-                
+            </div>
+            <div>
+                <a href="{% url "user-posts" profile.user.username %}" class="read-more-btn mt-3" >
+                    See all {% if profile.gender == 'man' %}his{% else %}her{% endif %} posts
+                </a>
             </div>
         </div>
     </div>
